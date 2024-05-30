@@ -43,9 +43,8 @@ public class Problem5 {
 
         while (true) {
             String input = sc.nextLine();
-            if (input.equalsIgnoreCase("end")) {
+            if (input.equalsIgnoreCase("end")) 
                 break;
-            }
 
             if (input.length() != 2) {
                 System.out.println("Invalid edge format. Please use (e.g. \"ab\") format.");

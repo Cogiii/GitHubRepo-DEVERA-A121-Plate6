@@ -18,7 +18,7 @@ public class Problem4 {
             }
 
             if(input.length() != 2){
-                System.out.println("Invalid edge format. lease use \"ab\" format.");
+                System.out.println("Invalid edge format. Please use \"ab\" format.");
                 continue;
             }
 
