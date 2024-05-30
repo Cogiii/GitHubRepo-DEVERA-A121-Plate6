@@ -3,9 +3,25 @@
 import java.util.*;
 
 public class Problem3 {
+    /*Check if the undirected graph has a cycle through parenting. Traverse all the edges starting from the first node 
+      then if it goes back to the parent then return true */
+    private static boolean hasCycleUndirected(String node, String parent, Map<String, List<String>> adjList, Set<String> visited) {
+        visited.add(node);
 
-    /*Check if the directed graph has a cycle through recursion. Traverse the edges starting from the first node, if we go back to the node, return true.*/
-    private static boolean hasCycle(String node, Map<String, List<String>> adjList, Set<String> visited, Set<String> recStack) {
+        for (String neighbor : adjList.get(node)) {
+            if (!visited.contains(neighbor)) {
+                if (hasCycleUndirected(neighbor, node, adjList, visited)) {
+                    return true;
+                }
+            } else if (!neighbor.equals(parent)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*Check if the directed graph has a cycle through recursion. Traverse the edges, if we go back to the node (contains in recursion stack) return true */
+    private static boolean hasCycleDirected(String node, Map<String, List<String>> adjList, Set<String> visited, Set<String> recStack) {
         if (recStack.contains(node)) 
             return true;
 
@@ -13,7 +29,7 @@ public class Problem3 {
         recStack.add(node);
 
         for (String neighbor : adjList.get(node)) 
-            if (hasCycle(neighbor, adjList, visited, recStack)) 
+            if (hasCycleDirected(neighbor, adjList, visited, recStack)) 
                 return true;
 
         recStack.remove(node);
@@ -57,14 +73,24 @@ public class Problem3 {
             }
         }
 
-        // check all the vertex and the neighbor itself to traverse all the edges (call the hasCycle function)
         boolean hasCycle = false;
-        Set<String> visited = new HashSet<>();
-        Set<String> recStack = new HashSet<>();
-        for (String node : adjList.keySet()) {
-            if (!visited.contains(node) && hasCycle(node, adjList, visited, recStack)) {
-                hasCycle = true;
-                break;
+
+        if (isDirected) {
+            Set<String> visited = new HashSet<>();
+            Set<String> recStack = new HashSet<>();
+            for (String node : adjList.keySet()) {
+                if (!visited.contains(node) && hasCycleDirected(node, adjList, visited, recStack)) {
+                    hasCycle = true;
+                    break;
+                }
+            }
+        } else {
+            Set<String> visited = new HashSet<>();
+            for (String node : adjList.keySet()) {
+                if (!visited.contains(node) && hasCycleUndirected(node, null, adjList, visited)) {
+                    hasCycle = true;
+                    break;
+                }
             }
         }
 
