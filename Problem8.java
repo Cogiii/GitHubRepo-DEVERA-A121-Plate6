@@ -54,6 +54,8 @@ public class Problem8 {
         }
     }
 
+    // Check if the 2 graph is isomorphic or not through checking if both matrix are identical to each other through permutations.
+    // If both initial matrix are not identical, call nextPermutation function.
     private static boolean areIsomorphic(int[][] adjMatrix1, int[][] adjMatrix2, int n) {
         int[] perm = new int[n];
         for (int i = 0; i < n; i++) perm[i] = i;
@@ -64,7 +66,7 @@ public class Problem8 {
 
         return false;
     }
-
+    // Check if both matrix are identical
     private static boolean checkPermutation(int[][] adjMatrix1, int[][] adjMatrix2, int[] perm, int n) {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
@@ -72,7 +74,7 @@ public class Problem8 {
                     return false;
         return true;
     }
-
+    // Provide another arrangement of permutation until the array is in descending order (means all possible ways rearranging the perm order does not find any identical)
     private static boolean nextPermutation(int[] perm) {
         int n = perm.length, i = n - 2;
         while (i >= 0 && perm[i] >= perm[i + 1]) i--;

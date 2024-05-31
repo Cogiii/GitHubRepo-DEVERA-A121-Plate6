@@ -2,7 +2,8 @@
 import java.util.*;
 
 public class Problem1 {
-    // traverse all the edges base from the neighbor or adjacent list and if the edges is already visited, stop the recursion.
+    // traverse all the node base from the neighbor or adjacent list then add the node to the visited list
+    // if the node is already visited, stop the recursion.
     private static void searchPath(String node, Map<String, List<String>> adjList, Set<String> visited) {
         visited.add(node);
         for (String neighbor : adjList.get(node)) {
@@ -49,6 +50,7 @@ public class Problem1 {
         int componentCount = 0;
         
         // check each vertex of it traverse all the edges at once without disconnecting.
+        // Check if the vertex is not yet visit, then call the searchPath function.
         for (String vertex : vertices) {
             if (!visited.contains(vertex)) {
                 searchPath(vertex, adjList, visited);
